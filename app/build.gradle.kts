@@ -47,6 +47,8 @@ dependencies {
   implementation("androidx.constraintlayout:constraintlayout:1.1.3")
   implementation(Deps.Lifecycle.viewModel)
   implementation("androidx.fragment:fragment-ktx:1.2.3")
+  implementation(Deps.Logging.logger)
+  implementation(Deps.permission)
 
   kapt(Deps.Lifecycle.compiler)
 

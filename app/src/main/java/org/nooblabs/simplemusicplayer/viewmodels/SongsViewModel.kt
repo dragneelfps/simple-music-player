@@ -6,28 +6,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.nooblabs.simplemusicplayer.library.MusicLibrary
+import org.nooblabs.simplemusicplayer.loaders.SongLoader
 import org.nooblabs.simplemusicplayer.models.Song
 
 /**
  * [AndroidViewModel] for songs.
  */
-class SongsViewModel(application: Application, private val musicLibrary: MusicLibrary) :
+class SongsViewModel(application: Application, private val songLoader: SongLoader) :
   AndroidViewModel(application) {
 
   private val songs: MutableLiveData<List<Song>> by lazy {
     MutableLiveData<List<Song>>().also {
-      loadSongs()
+      it.postValue(loadSongs())
     }
   }
 
   /**
    * Returns [LiveData] for [List] of [Song].
    */
-  fun getSongs(): LiveData<List<Song>> = songs
+  fun getSongs(): LiveData<List<Song>> = kotlin.run {
+    songs
+  }
 
   private fun loadSongs(): List<Song> =
-    musicLibrary.getAllMusic(this.getApplication<Application>().contentResolver)
+    songLoader.getAllMusic(this.getApplication<Application>().contentResolver)
 }
 
 /**
@@ -35,10 +37,10 @@ class SongsViewModel(application: Application, private val musicLibrary: MusicLi
  */
 class SongsViewModelFactory(
   private val application: Application,
-  private val musicLibrary: MusicLibrary
+  private val songLoader: SongLoader
 ) :
   ViewModelProvider.NewInstanceFactory() {
 
   override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-    SongsViewModel(application, musicLibrary) as T
+    SongsViewModel(application, songLoader) as T
 }

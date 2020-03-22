@@ -24,9 +24,7 @@ class SongsViewModel(application: Application, private val songLoader: SongLoade
   /**
    * Returns [LiveData] for [List] of [Song].
    */
-  fun getSongs(): LiveData<List<Song>> = kotlin.run {
-    songs
-  }
+  fun getSongs(): LiveData<List<Song>> = songs
 
   private fun loadSongs(): List<Song> =
     songLoader.getAllMusic(this.getApplication<Application>().contentResolver)

@@ -49,6 +49,7 @@ dependencies {
   implementation("androidx.fragment:fragment-ktx:1.2.3")
   implementation(Deps.Logging.logger)
   implementation(Deps.permission)
+  implementation(Deps.recyclical)
 
   kapt(Deps.Lifecycle.compiler)
 

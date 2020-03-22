@@ -22,5 +22,6 @@ object Deps {
     const val logger = "com.orhanobut:logger:2.2.0"
   }
 
+  const val recyclical = "com.afollestad:recyclical:1.1.1"
   const val permission = "com.github.florent37:runtime-permission-kotlin:1.1.2"
 }

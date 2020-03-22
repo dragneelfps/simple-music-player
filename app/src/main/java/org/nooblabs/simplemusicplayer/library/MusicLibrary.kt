@@ -1,23 +1,36 @@
 package org.nooblabs.simplemusicplayer.library
 
 import android.content.ContentResolver
+import android.database.Cursor
 import android.provider.MediaStore.Audio.Media
+import org.nooblabs.simplemusicplayer.models.Song
+
+private val fields = arrayOf(Media._ID, Media.TITLE, Media.ARTIST)
 
 /**
- * Returns all music.
+ * Contains functions to get songs.
  */
-fun ContentResolver.getAllMusic(): List<Map<String, String?>> {
-  return query(Media.EXTERNAL_CONTENT_URI, null, null, null, null)?.use { cursor ->
-    val songs = arrayListOf<Map<String, String?>>()
-    while (cursor.moveToNext()) {
-      val song = hashMapOf<String, String?>()
-      for (i in 0 until cursor.columnCount) {
-        val attributeName = cursor.getColumnName(i)
-        val attributeValue = cursor.getString(i)
-        song[attributeName] = attributeValue
-      }
-      songs.add(song)
-    }
-    songs
-  } ?: emptyList()
+class MusicLibrary {
+
+  /**
+   * Returns all music.
+   */
+  fun getAllMusic(contentResolver: ContentResolver): List<Song> {
+    return contentResolver.query(Media.EXTERNAL_CONTENT_URI, fields, null, null, null)
+      ?.use { cursor ->
+        val songs = arrayListOf<Song>()
+        while (cursor.moveToNext()) {
+          val song = Song(
+            cursor.getColumnValue(Media._ID),
+            cursor.getColumnValue(Media.TITLE),
+            cursor.getColumnValue(Media.ARTIST)
+          )
+          songs.add(song)
+        }
+        songs
+      } ?: emptyList()
+  }
+
+  private fun Cursor.getColumnValue(columnName: String): String =
+    getString(getColumnIndex(columnName))
 }

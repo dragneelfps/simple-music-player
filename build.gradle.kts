@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath("com.android.tools.build:gradle:4.1.0-alpha03")
     classpath(kotlin("gradle-plugin", version = "1.3.70"))
-    classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Deps.Plugins.Detekt.detektVersion}")
+    classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Deps.Version.detektVersion}")
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -17,7 +17,7 @@ buildscript {
 }
 
 plugins {
-  id("io.gitlab.arturbosch.detekt") version Deps.Plugins.Detekt.detektVersion
+  id("io.gitlab.arturbosch.detekt") version Deps.Version.detektVersion
 }
 
 allprojects {
@@ -29,7 +29,7 @@ allprojects {
   apply(plugin = "io.gitlab.arturbosch.detekt")
 
   dependencies {
-    detektPlugins(Deps.Plugins.Detekt.formatting)
+    detektPlugins(Deps.formatting)
   }
 }
 

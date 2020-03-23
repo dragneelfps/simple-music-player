@@ -76,7 +76,6 @@ class SongListFragment : Fragment() {
                 }
                 else -> false
               }
-
             }
             popupMenu.show()
           }

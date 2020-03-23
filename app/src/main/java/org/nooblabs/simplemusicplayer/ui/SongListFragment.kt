@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.afollestad.recyclical.datasource.emptyDataSourceTyped
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.bumptech.glide.Glide
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import kotlinx.android.synthetic.main.fragment_song_list.*
 import org.nooblabs.simplemusicplayer.R
@@ -55,7 +57,16 @@ class SongListFragment : Fragment() {
       withItem<Song, SongViewHolder>(R.layout.item_song) {
         onBind(::SongViewHolder) { _, item ->
           title.text = item.title
-          artist.text = item.artist
+          Glide
+            .with(itemView)
+            .load(item.album?.albumArt)
+            .placeholder(R.drawable.ic_default_album_img)
+            .into(albumArt)
+          menu.setOnClickListener { v ->
+            val popupMenu = PopupMenu(requireContext(), v)
+            popupMenu.menuInflater.inflate(R.menu.song_popup, popupMenu.menu)
+            popupMenu.show()
+          }
         }
       }
     }

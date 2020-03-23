@@ -17,11 +17,15 @@ object Deps {
 
     const val compiler = "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
   }
+
   object Logging {
 
     const val logger = "com.orhanobut:logger:2.2.0"
   }
 
+  const val materialComponents = "com.google.android.material:material:1.1.0"
   const val recyclical = "com.afollestad:recyclical:1.1.1"
   const val permission = "com.github.florent37:runtime-permission-kotlin:1.1.2"
+  const val glide = "com.github.bumptech.glide:glide:4.11.0"
+  const val glideCompiler = "com.github.bumptech.glide:compiler:4.11.0"
 }

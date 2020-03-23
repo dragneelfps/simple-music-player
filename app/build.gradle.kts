@@ -50,6 +50,9 @@ dependencies {
   implementation(Deps.Logging.logger)
   implementation(Deps.permission)
   implementation(Deps.recyclical)
+  implementation(Deps.materialComponents)
+  implementation(Deps.glide)
+  implementation(Deps.glideCompiler)
 
   kapt(Deps.Lifecycle.compiler)
 

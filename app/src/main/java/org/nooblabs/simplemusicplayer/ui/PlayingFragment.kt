@@ -18,7 +18,7 @@ import org.nooblabs.simplemusicplayer.viewmodels.CurrentPlayingViewModel
  */
 class PlayingFragment : Fragment() {
 
-  private val currentPlayingViewModel: CurrentPlayingViewModel by viewModels()
+  private val currentPlayingViewModel: CurrentPlayingViewModel by viewModels({ requireActivity() })
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -35,6 +35,7 @@ class PlayingFragment : Fragment() {
       Glide
         .with(this)
         .load(song.album?.albumArt)
+        .placeholder(R.drawable.ic_default_album_img)
         .into(playing_album_art)
       playing_title.text = song.title
     })

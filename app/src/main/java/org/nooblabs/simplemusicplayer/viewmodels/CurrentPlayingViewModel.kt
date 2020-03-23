@@ -33,5 +33,8 @@ class CurrentPlayingViewModel : ViewModel() {
    */
   fun addSongToQueue(song: Song) {
     queue.add(song)
+    if (queue.size == 1) {
+      currentSongLiveData.postValue(song)
+    }
   }
 }

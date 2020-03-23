@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
-
 plugins {
   id("com.android.application")
   id("kotlin-android")
@@ -8,14 +6,14 @@ plugins {
 }
 
 android {
-  compileSdkVersion(29)
+  compileSdkVersion(Config.compileSdkVersion)
 
   defaultConfig {
-    applicationId("org.nooblabs.simplemusicplayer")
-    minSdkVersion(23)
-    targetSdkVersion(29)
-    versionCode(1)
-    versionName("1.0")
+    applicationId(Config.applicationId)
+    minSdkVersion(Config.minSdkVersion)
+    targetSdkVersion(Config.targetSdkVersion)
+    versionCode(Config.versionCode)
+    versionName(Config.versionName)
 
     testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
   }
@@ -37,27 +35,34 @@ android {
   kotlinOptions {
     jvmTarget = "1.8"
   }
+
+  testOptions {
+    unitTests.isIncludeAndroidResources = true
+    unitTests.all(closureOf<Test> {
+      useJUnitPlatform()
+      testLogging.showStackTraces = true
+    } as groovy.lang.Closure<Test>)
+  }
 }
 
 dependencies {
-  implementation("androidx.legacy:legacy-support-v4:1.0.0")
-  implementation("org.jetbrains.kotlin:kotlin-stdlib:${KotlinCompilerVersion.VERSION}")
-  implementation("androidx.core:core-ktx:1.2.0")
-  implementation("androidx.appcompat:appcompat:1.1.0")
-  implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-  implementation(Deps.Lifecycle.viewModel)
-  implementation("androidx.fragment:fragment-ktx:1.2.3")
-  implementation(Deps.Logging.logger)
+  implementation(Deps.legacySupport)
+  implementation(Deps.stdlib)
+  implementation(Deps.corektx)
+  implementation(Deps.appcompat)
+  implementation(Deps.constraintLayout)
+  implementation(Deps.lifecycleViewModel)
+  implementation(Deps.fragmentKtx)
+  implementation(Deps.logger)
   implementation(Deps.permission)
   implementation(Deps.recyclical)
   implementation(Deps.materialComponents)
   implementation(Deps.glide)
   implementation(Deps.glideCompiler)
 
-  kapt(Deps.Lifecycle.compiler)
+  kapt(Deps.lifecycleCompiler)
 
-  testImplementation("junit:junit:4.12")
-  androidTestImplementation("androidx.test.ext:junit:1.1.1")
-  androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+  androidTestImplementation(Deps.kotest)
+  androidTestImplementation(Deps.espresso)
 }
 

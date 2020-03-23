@@ -20,6 +20,7 @@ object Deps {
   const val legacySupport = "androidx.legacy:legacy-support-v4:1.0.0"
   const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.3"
   const val materialComponents = "com.google.android.material:material:1.1.0"
+  const val viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
 
   const val recyclical = "com.afollestad:recyclical:1.1.1"
   const val permission = "com.github.florent37:runtime-permission-kotlin:1.1.2"

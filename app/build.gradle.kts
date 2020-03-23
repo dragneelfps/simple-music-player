@@ -46,6 +46,7 @@ android {
 }
 
 dependencies {
+  implementation("androidx.legacy:legacy-support-v4:1.0.0")
   implementation(Deps.legacySupport)
   implementation(Deps.stdlib)
   implementation(Deps.corektx)
@@ -59,6 +60,7 @@ dependencies {
   implementation(Deps.materialComponents)
   implementation(Deps.glide)
   implementation(Deps.glideCompiler)
+  implementation(Deps.viewpager2)
 
   kapt(Deps.lifecycleCompiler)
 

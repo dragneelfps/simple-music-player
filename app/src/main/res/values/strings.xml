@@ -5,4 +5,5 @@
     <string name="default_song_title">As if your last</string>
     <string name="default_song_artist">Blackpink</string>
     <string name="default_song_album">As If It\'s Your Last</string>
+    <string name="menu_item_song_info">Song Info</string>
 </resources>

@@ -11,7 +11,7 @@ import java.util.LinkedList
  */
 class CurrentPlayingViewModel : ViewModel() {
 
-  private val queue = LinkedList<Song>()
+  private val queueLiveData = MutableLiveData<LinkedList<Song>>(LinkedList())
 
   private val currentSongLiveData = MutableLiveData<Song>()
 
@@ -21,20 +21,31 @@ class CurrentPlayingViewModel : ViewModel() {
   fun getCurrentSong(): LiveData<Song> = currentSongLiveData
 
   /**
-   * Move next in [queue].
+   * Returns [LiveData] for queue.
+   */
+  fun getQueue(): LiveData<LinkedList<Song>> = queueLiveData
+
+  /**
+   * Move next in [queueLiveData].
    */
   fun playNext() {
-    val next = queue.poll() ?: return
-    currentSongLiveData.postValue(next)
+    queueLiveData.value?.let { queue ->
+      val next = queue.poll() ?: return
+      currentSongLiveData.postValue(next)
+      queueLiveData.postValue(queue)
+    }
   }
 
   /**
-   * Adds [song] to the [queue].
+   * Adds [song] to the [queueLiveData].
    */
   fun addSongToQueue(song: Song) {
-    queue.add(song)
-    if (queue.size == 1) {
-      currentSongLiveData.postValue(song)
+    queueLiveData.value?.let { queue ->
+      if (queue.isEmpty()) {
+        currentSongLiveData.postValue(song)
+      }
+      queue.add(song)
+      queueLiveData.postValue(queue)
     }
   }
 }

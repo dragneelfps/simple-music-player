@@ -2,9 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/song_add_queue"
-        android:title="Add to Queue" />
-    <item
         android:id="@+id/song_info"
-        android:title="Song Info" />
+        android:title="@string/menu_item_song_info" />
 </menu>

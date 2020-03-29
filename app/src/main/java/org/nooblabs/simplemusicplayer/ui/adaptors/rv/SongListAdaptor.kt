@@ -11,13 +11,14 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.nooblabs.simplemusicplayer.R
+import org.nooblabs.simplemusicplayer.callbacks.SongListItemListener
 import org.nooblabs.simplemusicplayer.models.Song
 
 
 /**
  * Adaptor for song list.
  */
-class SongListAdaptor(private var songItemListener: SongItemListener) :
+class SongListAdaptor(private var songListItemListener: SongListItemListener) :
   RecyclerView.Adapter<SongListAdaptor.SongViewHolder>() {
 
   init {
@@ -54,7 +55,7 @@ class SongListAdaptor(private var songItemListener: SongItemListener) :
         }
         popupMenu.show()
       }
-      itemView.setOnClickListener { songItemListener.onSongClick(position) }
+      itemView.setOnClickListener { songListItemListener.onSongClick(position) }
     }
   }
 
@@ -83,12 +84,3 @@ class SongListAdaptor(private var songItemListener: SongItemListener) :
   }
 }
 
-/**
- * Callbacks for song item.
- */
-interface SongItemListener {
-  /**
-   * Callback when song item is clicked.
-   */
-  fun onSongClick(index: Int)
-}

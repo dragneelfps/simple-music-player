@@ -1,3 +1,5 @@
+@file:Suppress("UndocumentedPublicProperty")
+
 package org.nooblabs.simplemusicplayer.ui.adaptors.rv
 
 import android.view.LayoutInflater
@@ -10,14 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.nooblabs.simplemusicplayer.R
 import org.nooblabs.simplemusicplayer.models.Song
-import org.nooblabs.simplemusicplayer.viewmodels.CurrentPlayingViewModel
 
 
 /**
  * Adaptor for song list.
  */
-class SongListAdaptor(private val currentPlayingViewModel: CurrentPlayingViewModel) :
-  RecyclerView.Adapter<SongViewHolder>() {
+class SongListAdaptor(private var songItemListener: SongItemListener) :
+  RecyclerView.Adapter<SongListAdaptor.SongViewHolder>() {
 
   init {
     setHasStableIds(true)
@@ -48,15 +49,12 @@ class SongListAdaptor(private val currentPlayingViewModel: CurrentPlayingViewMod
         popupMenu.menuInflater.inflate(R.menu.song_popup, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
           when (item.itemId) {
-            R.id.song_add_queue -> {
-              currentPlayingViewModel.addSongToQueue(song)
-              true
-            }
             else -> false
           }
         }
         popupMenu.show()
       }
+      itemView.setOnClickListener { songItemListener.onSongClick(position) }
     }
   }
 
@@ -70,18 +68,27 @@ class SongListAdaptor(private val currentPlayingViewModel: CurrentPlayingViewMod
     songList.addAll(songs)
     notifyDataSetChanged()
   }
+
+  /**
+   * Represents a song.
+   */
+  class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val title: TextView = itemView.findViewById(R.id.song_title)
+    val albumArt: ImageView = itemView.findViewById(
+      R.id.song_album_art
+    )
+    val artist: TextView = itemView.findViewById(R.id.song_artist)
+    val album: TextView = itemView.findViewById(R.id.song_album)
+    val menu: View = itemView.findViewById(R.id.song_menu)
+  }
 }
 
 /**
- * Represents a song.
+ * Callbacks for song item.
  */
-@Suppress("UndocumentedPublicProperty")
-class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-  val title: TextView = itemView.findViewById(R.id.song_title)
-  val albumArt: ImageView = itemView.findViewById(
-    R.id.song_album_art
-  )
-  val artist: TextView = itemView.findViewById(R.id.song_artist)
-  val album: TextView = itemView.findViewById(R.id.song_album)
-  val menu: View = itemView.findViewById(R.id.song_menu)
+interface SongItemListener {
+  /**
+   * Callback when song item is clicked.
+   */
+  fun onSongClick(index: Int)
 }

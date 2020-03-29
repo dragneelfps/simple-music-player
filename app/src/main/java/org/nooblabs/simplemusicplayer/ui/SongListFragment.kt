@@ -2,21 +2,17 @@ package org.nooblabs.simplemusicplayer.ui
 
 import android.Manifest
 import android.os.Bundle
-import android.widget.PopupMenu
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.afollestad.recyclical.datasource.emptyDataSourceTyped
-import com.afollestad.recyclical.setup
-import com.afollestad.recyclical.withItem
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import kotlinx.android.synthetic.main.fragment_song_list.rv_song_list
 import org.nooblabs.simplemusicplayer.R
 import org.nooblabs.simplemusicplayer.loaders.SongLoader
-import org.nooblabs.simplemusicplayer.models.Song
-import org.nooblabs.simplemusicplayer.ui.viewholders.SongViewHolder
+import org.nooblabs.simplemusicplayer.ui.adaptors.rv.SongListAdaptor
 import org.nooblabs.simplemusicplayer.viewmodels.CurrentPlayingViewModel
 import org.nooblabs.simplemusicplayer.viewmodels.SongsViewModel
 import org.nooblabs.simplemusicplayer.viewmodels.SongsViewModelFactory
@@ -26,6 +22,7 @@ import org.nooblabs.simplemusicplayer.viewmodels.SongsViewModelFactory
  */
 class SongListFragment : Fragment(R.layout.fragment_song_list) {
 
+  private lateinit var songListAdaptor: SongListAdaptor
   private val songsViewModel: SongsViewModel by activityViewModels {
     SongsViewModelFactory(
       requireActivity().application,
@@ -34,42 +31,16 @@ class SongListFragment : Fragment(R.layout.fragment_song_list) {
   }
   private val currentPlayingViewModel: CurrentPlayingViewModel by viewModels({ requireActivity() })
 
-  private val songsDataSource = emptyDataSourceTyped<Song>()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    songListAdaptor = SongListAdaptor(currentPlayingViewModel)
+    rv_song_list.adapter = songListAdaptor
+    rv_song_list.layoutManager = LinearLayoutManager(requireContext())
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
     askPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
       songsViewModel.getSongs().observe(viewLifecycleOwner, Observer { songs ->
-        songsDataSource.clear()
-        songsDataSource.addAll(songs)
+        songListAdaptor.loadSongs(songs)
       })
-    }
-    rv_song_list.setup {
-      withDataSource(songsDataSource)
-      withItem<Song, SongViewHolder>(R.layout.item_song) {
-        onBind(::SongViewHolder) { _, song ->
-          title.text = song.title
-          Glide
-            .with(itemView)
-            .load(song.album?.albumArt)
-            .placeholder(R.drawable.ic_default_album_img)
-            .into(albumArt)
-          menu.setOnClickListener { v ->
-            val popupMenu = PopupMenu(requireContext(), v)
-            popupMenu.menuInflater.inflate(R.menu.song_popup, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item ->
-              when (item.itemId) {
-                R.id.song_add_queue -> {
-                  currentPlayingViewModel.addSongToQueue(song)
-                  true
-                }
-                else -> false
-              }
-            }
-            popupMenu.show()
-          }
-        }
-      }
     }
   }
 }

@@ -5,4 +5,4 @@ import android.net.Uri
 /**
  * Represents an album entity.
  */
-data class Album(val albumId: Long, val albumArt: Uri)
+data class Album(val id: Long, val art: Uri, val name: String)

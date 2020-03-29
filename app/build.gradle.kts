@@ -56,7 +56,6 @@ dependencies {
   implementation(Deps.fragmentKtx)
   implementation(Deps.logger)
   implementation(Deps.permission)
-  implementation(Deps.recyclical)
   implementation(Deps.materialComponents)
   implementation(Deps.glide)
   implementation(Deps.glideCompiler)

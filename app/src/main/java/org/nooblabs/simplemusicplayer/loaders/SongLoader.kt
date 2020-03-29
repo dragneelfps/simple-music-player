@@ -16,7 +16,8 @@ private val fields = arrayOf(
   BaseColumns._ID,
   AudioColumns.TITLE,
   AudioColumns.ARTIST,
-  AudioColumns.ALBUM_ID
+  AudioColumns.ALBUM_ID,
+  AudioColumns.ALBUM
 )
 
 /**
@@ -40,13 +41,13 @@ class SongLoader {
               Media.EXTERNAL_CONTENT_URI,
               cursor.getLong(0)
             ),
-//            album = albumLoader.getAlbum(contentResolver, cursor.getLong(3))
             album = Album(
-              albumId = cursor.getLong(3),
-              albumArt = ContentUris.withAppendedId(
+              id = cursor.getLong(3),
+              art = ContentUris.withAppendedId(
                 Uri.parse("content://media/external/audio/albumart"),
                 cursor.getLong(3)
-              )
+              ),
+              name = cursor.getString(4)
             )
           )
           songs.add(song)

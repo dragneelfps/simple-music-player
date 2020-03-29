@@ -2,4 +2,7 @@
     <string name="app_name">Simple Music Player</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_song_title">As if your last</string>
+    <string name="default_song_artist">Blackpink</string>
+    <string name="default_song_album">As If It\'s Your Last</string>
 </resources>

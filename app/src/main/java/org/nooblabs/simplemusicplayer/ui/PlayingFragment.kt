@@ -23,7 +23,7 @@ class PlayingFragment : Fragment(R.layout.fragment_playing) {
     currentPlayingViewModel.getCurrentSong().observe(viewLifecycleOwner, Observer { song ->
       Glide
         .with(this)
-        .load(song.album?.albumArt)
+        .load(song.album?.art)
         .placeholder(R.drawable.ic_default_album_img)
         .into(playing_album_art)
       playing_title.text = song.title

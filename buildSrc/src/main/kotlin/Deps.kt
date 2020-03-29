@@ -29,6 +29,6 @@ object Deps {
   const val logger = "com.orhanobut:logger:2.2.0"
   const val formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Version.detektVersion}"
 
-  const val kotest = "io.kotlintest:kotlintest-runner-junit4:4.0.0"
+  const val kotest = "io.kotlintest:kotlintest-runner-junit4:3.4.2"
   const val espresso = "androidx.test.espresso:espresso-core:3.2.0"
 }

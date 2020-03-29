@@ -2,9 +2,6 @@ package org.nooblabs.simplemusicplayer.ui
 
 import android.Manifest
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -27,7 +24,7 @@ import org.nooblabs.simplemusicplayer.viewmodels.SongsViewModelFactory
 /**
  * [Fragment] for list of songs.
  */
-class SongListFragment : Fragment() {
+class SongListFragment : Fragment(R.layout.fragment_song_list) {
 
   private val songsViewModel: SongsViewModel by activityViewModels {
     SongsViewModelFactory(
@@ -38,14 +35,6 @@ class SongListFragment : Fragment() {
   private val currentPlayingViewModel: CurrentPlayingViewModel by viewModels({ requireActivity() })
 
   private val songsDataSource = emptyDataSourceTyped<Song>()
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_song_list, container, false)
-  }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)

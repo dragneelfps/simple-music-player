@@ -60,7 +60,6 @@ dependencies {
   implementation(Deps.materialComponents)
   implementation(Deps.glide)
   implementation(Deps.glideCompiler)
-  implementation(Deps.viewpager2)
 
   kapt(Deps.lifecycleCompiler)
 

@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    player.adapter = PlayerViewPagerAdaptor(this)
+    player.adapter = PlayerViewPagerAdaptor(supportFragmentManager)
   }
 
   companion object {

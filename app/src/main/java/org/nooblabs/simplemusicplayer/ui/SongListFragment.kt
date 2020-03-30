@@ -33,6 +33,7 @@ class SongListFragment(
     rv_song_list.layoutManager = LinearLayoutManager(requireContext())
 
     askPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
+      songsViewModel.loadSongs(requireActivity().contentResolver)
       songsViewModel.getSongs().observe(viewLifecycleOwner, Observer { songs ->
         songListAdaptor.loadSongs(songs)
       })
@@ -41,8 +42,6 @@ class SongListFragment(
     songsViewModel.currentSong().observe(viewLifecycleOwner, Observer { song ->
       selectedSongListener.onCurrentSongChanged(song)
     })
-
-    songsViewModel.loadSongs(requireActivity().contentResolver)
   }
 
   override fun onSongClick(index: Int) {

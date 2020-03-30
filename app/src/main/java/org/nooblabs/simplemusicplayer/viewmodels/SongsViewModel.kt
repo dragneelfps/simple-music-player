@@ -18,7 +18,7 @@ class SongsViewModel(private val songLoader: SongLoader) : ViewModel() {
 
   private val songs = MutableLiveData<List<Song>>(emptyList())
 
-  private val currentSongIndex = MutableLiveData<Int>(-1)
+  private val currentSongIndex = MutableLiveData<Int>()
 
   private val playerStatus = MutableLiveData<PlayerStatus>(PlayerStatus.EMPTY)
 

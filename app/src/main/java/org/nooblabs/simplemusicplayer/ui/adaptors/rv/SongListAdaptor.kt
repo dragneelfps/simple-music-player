@@ -25,7 +25,7 @@ class SongListAdaptor(private var songListItemListener: SongListItemListener) :
     setHasStableIds(true)
   }
 
-  private val songList: MutableList<Song> = ArrayList()
+  private val songList = mutableListOf<Song>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder =
     SongViewHolder(
@@ -55,7 +55,7 @@ class SongListAdaptor(private var songListItemListener: SongListItemListener) :
         }
         popupMenu.show()
       }
-      itemView.setOnClickListener { songListItemListener.onSongClick(position) }
+      itemView.setOnClickListener { songListItemListener.onSongClick(song) }
     }
   }
 

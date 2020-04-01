@@ -5,7 +5,7 @@ import org.nooblabs.simplemusicplayer.models.Song
 /**
  * Callbacks for Current playing song.
  */
-interface SelectedSongListener {
+interface PlayerStatusListener {
 
   /**
    * Callback when current song is changed.
